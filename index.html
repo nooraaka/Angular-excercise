@@ -1,0 +1,42 @@
+<html ng-app="ostoslista">
+    <head>
+        <meta charset="utf-8">
+        <title>Harjoitustehtävä 4 - Angular</title>
+        <script src ="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js"></script>
+        <script>
+            var ostoslista = angular.module('ostoslista', [])
+            ostoslista.controller('LisaaLista', function ($scope) {
+                $scope.nimi ='';
+                $scope.ostettavat=[];
+
+                $scope.lisaaListaan= function() {
+                    $scope.ostettavat.push($scope.osta);
+                    $scope.osta='';
+                }
+
+                $scope.poistaListasta= function(osta){
+                    var i = $scope.ostettavat.indexOf(osta);
+                    $scope.ostettavat.splice(i, 1);
+                }
+            });
+        </script>
+    </head>
+    <body ng-controller="LisaaLista">
+        Ostoslista <br><br>
+        Kuka ostaa: <br>
+        <input ng-model="nimi" type= "text"/> <br>
+        
+        Lisää listaan: 
+        <form ng-submit="lisaaListaan()">
+            <input type ="text" ng-model="osta">
+            <input type ="submit" value="Lisää">
+        </form>
+        <ul>
+            {{nimi}}, muista ostaa seuraavat tuotteet:<br>
+            <li ng-repeat="osta in ostettavat">{{osta}}
+                <a href="" ng-click="poistaListasta(osta)">Ostettu</a>
+            </li>
+        </ul>
+    </body>
+
+</html>
